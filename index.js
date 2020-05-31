@@ -1,6 +1,7 @@
 const express = require("express");
 const db = require("./database/db.js")
 const mongodb = require("mongodb")
+const authRoutes = require("./routes/auth")
 const app = express()
 
 
@@ -9,20 +10,7 @@ app.get("/", (req, res) => {
 })
 
 
-app.post("/test", (req, res) => {
-    db.getDb()
-    .collection("haha")
-    .insertOne({
-        name: "Laith",
-        age: 23
-    })
-    .then(result => {
-        res.send(result)
-    })
-    .catch(err => {
-        res.status(500)
-    })
-})
+app.use("/auth", authRoutes)
 
 
 db.initDb((err, db) => {
