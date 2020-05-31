@@ -5,6 +5,18 @@ const bcrypt = require("bcrypt")
 
 
 router.post("/signup", (req, res, next) => {
+
+    db.getDb()
+    .collection("users")
+    .findOne({email: "harblaith77@gmail.com"})
+    .then(user => {
+        if(user){
+            return res.status(409).json({
+                message: "email already exists"
+            })
+        }
+    })
+
     bcrypt.hash("password", 10, (err, hash) => {
         if(err){
             res.send(err)
