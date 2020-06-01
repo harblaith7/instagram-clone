@@ -4,6 +4,7 @@ const db = require("../database/db");
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken");
 const keys = require('../configs/dev')
+const checkAuth = require("../middleware/checksAuth")
 
 
 router.post("/signup", (req, res, next) => {
@@ -80,7 +81,7 @@ router.post("/login", (req, res, next) => {
     })
 })
 
-router.post("/lala", (req, res, next) => {
+router.get("/protectedRoute", checkAuth, (req, res, next) => {
     res.send("bitch")
 })
 
