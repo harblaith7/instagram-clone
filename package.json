@@ -1,0 +1,27 @@
+{
+  "name": "develam",
+  "version": "1.0.0",
+  "description": "This is a image uploading application I've built to improve my node.js skills",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harblaith7/image-upload-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/harblaith7/image-upload-app/issues"
+  },
+  "homepage": "https://github.com/harblaith7/image-upload-app#readme",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "express": "^4.17.1",
+    "express-validator": "^6.5.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.5.8"
+  }
+}
