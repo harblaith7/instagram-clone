@@ -6,6 +6,7 @@ const keys = require("../configs/dev")
 
 
 router.post("/signup", (req, res, next) => {
+    console.log("running")
     // Checks if user email is already in the database
     db.getDb()
     .collection("users")
@@ -33,7 +34,10 @@ router.post("/signup", (req, res, next) => {
                     password: hash
                 })
                 .then(response => {
+                    console.log("running")
                     res.json(response)
+                    
+                    
                 })
                 .catch(err => {
                     res.status(500).json(err)

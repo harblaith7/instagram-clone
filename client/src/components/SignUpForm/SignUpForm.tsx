@@ -9,7 +9,7 @@ interface IState {
     password: string
 }
 
-const port: string = "http://localhost:4000"
+
 
  class SignUpForm extends Component<{}, any>  {
 
@@ -42,7 +42,7 @@ const port: string = "http://localhost:4000"
             password: this.state.password
         }
 
-        axios.post(`${port}/auth/signup`, userInfo)
+        axios.post(`/api/auth/signup`, userInfo)
         .then(response => {
             console.log(response.data)
         })
@@ -56,7 +56,7 @@ const port: string = "http://localhost:4000"
             email: "",
             password: "",
         })
-        
+
         e.preventDefault();
 
     }
