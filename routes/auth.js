@@ -28,6 +28,8 @@ router.post("/signup", (req, res, next) => {
                 .collection("users")
                 .insertOne({
                     email: req.body.email,
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
                     password: hash
                 })
                 .then(response => {
