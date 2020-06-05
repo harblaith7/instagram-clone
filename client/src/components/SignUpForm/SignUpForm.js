@@ -38,11 +38,18 @@ import Alert from "../Alert/Alert"
 
         const {userInput} = this.state
 
+        // CHECKS IF THERE ARE ANY MISSING FIELDS
         for(let key in userInput){
             if(userInput[key] === ""){
                 return this.props.setAlert("You are missing a field")
             }
         }
+
+        // CHECKS IF PASSWORDS ARE A MATCH
+        if(userInput.password !== userInput.confirmPassword){
+            return this.props.setAlert("Your passwords don't match up")
+        }
+        
     }
 
     displayAlerts = () => {
@@ -55,7 +62,7 @@ import Alert from "../Alert/Alert"
         return (
             <div className="SignUpForm">
                 <div className="SignUpForm__container">
-                    {this.props.alerts.length && this.displayAlerts()}
+                    {this.props.alerts.length ? this.displayAlerts() : ""}
                     <form action="" className="SignUpForm__form" onSubmit={this.handleSubmit}>
                         <input 
                             type="text" 
