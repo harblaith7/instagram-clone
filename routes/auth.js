@@ -1,123 +1,90 @@
-const express = require("express")
-const router = express.Router()
-const {check, validationResult} = require("express-validator");
-const bcrypt = require("bcrypt");
+const router = require("express").Router()
+const {check, validationResult} = require("express-validator")
 const db = require("../database/db");
-const keys = require("../config/dev");
+const bycrpt = require("bcrypt")
 const jwt = require("jsonwebtoken")
-
+const keys = require("../config/dev")
 
 // SIGN UP ROUTE 
+// PUBLIC
 router.post("/signup", [
-    check("firstName", "First name is required")
-        .not()
-        .isEmpty(),
-    check("lastName", "Last name is required")
-        .not()
-        .isEmpty(),
-    check("email", "Please provide a valid email")
-        .isEmail(),
-    check("password", "Password must be greater than 6 and less than 50 characters")
-        .isLength({min: 6, max: 50})
-], (req, res) => {
-    // Validate user input 
-    const {firstName, lastName, email, password} = req.body
-    const {errors} = validationResult(req)
-    if(errors.length){
-        return res.status(409).json({
-            ourErrors : errors
-        })
+    check("firstName", "The first name is required")
+    .not()
+    .isEmpty(),
+    check("lastName", "The last name is required")
+    .not()
+    .isEmpty(),
+    check("email", "Provide a valid email")
+    .isEmail(),
+    check("password", "Provide a password that is greater than 6 characters")
+    .isLength({min: 6})
+], async (req, res) => {
+
+    // VALIDATE USER INPUT
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
     }
 
-    // Validate the user email doesnt already exist 
-    db.getDb()
+    // CHECK IF OUR USER ALREADY EXISTS
+
+    const {firstName, lastName, email, password} = req.body
+
+    let user = await db
+    .getDb()
     .collection("users")
     .findOne({email})
-    .then(user => {
-        if(user) return res.status(400).json({message: "User is already registered"})
-        // hash the password  
-        bcrypt.hash(
-            password,
-            10,
-            (err, hash) => {
-                if(err){
-                    return res.status(500).json({message: "Hashing went wrong"})
-                }
-                // store the user document
-                db.getDb()
-                .collection("users")
-                .insertOne({
-                    firstName,
-                    lastName,
-                    email,
-                    password: hash
-                })
-                .then(user => {
-                   // return a json web token 
-                   const token = jwt.sign(
-                       {email: user.email, id: user._id},
-                       keys.JWT_Secret,
-                        {expiresIn: "1h"}
-                   )
-                   return res.status(200).json({
-                       message: "User created",
-                       token
-                   })
-                })
-                .catch(err => {
-                    return res.status(500).json({message: "User generation went wrong"})
-                })
-            }
-        )
+
+    if(user){
+        return res.status(400).json({errors : [{msg: "The user already exists"}]})
+    }
+
+    // HASH THE PASSWORD
+    let hashPassword = await bycrpt.hash(password, 10)
+
+    // CREATE AND SAVE THE USER DOCUMENT INTO THE DB
+    user = await db
+    .getDb()
+    .collection("users")
+    .insertOne({
+        firstName,
+        lastName,
+        email,
+        password: hashPassword
     })
-    .catch(err => {
-        res.status(500).json({
-            message: "Something went wrong"
-        })
+
+
+    // RETURN BACK A JSON WEB TOKEN 
+    const token = jwt.sign({email}, keys.JWT_Secret)
+
+
+    // RETURN THE TOKEN AND SUCCESS MESSAGE
+    res.json({
+        token,
+        msg: "User created"
     })
-  
+
+
+})
+
+// LOG IN ROUTE 
+// PUBLIC
+router.post("/login", [], (req, res) => {
+    // VALID USER INPUT,
+
+    // CHECK IF USER EXISTS 
+
+    // COMPARE PASSWORD IN THE DATABASE WITH PROVIDED PASSWORD
+
+    // RETURN JSON WEB TOKEN
 })
 
 
+// GETS USER BY TOKEN
+// PRIVATE
 
-// LOG USER IN ROUTE
-router.post("/login", [
-    check("email", "Please provide a valid email")
-        .isEmail(),
-    check("password", "Please provide a password")
-        .not()
-        .isEmpty()
-], (req, res) => {
-    const {errors} = validationResult(req)
-    if(errors.length) return res.status(400).json({message : "Auth Failed"})
 
-    const {password, email} = req.body
-    // CHECK IF EMAIL IS IN DATABASE    
-    db.getDb()
-    .collection("users")
-    .findOne({email})
-    .then(user => {
-        if(!user) return res.status(400).json({message : "Auth Failed"})
-        bcrypt.compare(password, user.password, (err, result) => {
-            if(!result) return res.status(400).json({message : "Auth Failed"})
-            // RETURN A JSON WEB TOKEN
-            const token = jwt.sign(
-                {email: user.email, id: user._id},
-                keys.JWT_Secret,
-                 {expiresIn: "1h"}
-            )
-            return res.status(200).json({
-                message: "Auth Successful",
-                token
-            })
-        })
-    })
-    .catch(err => {
-        res.status(400).json({
-            message: "Auth Failed"
-        })
-    })
-})
 
 
 module.exports = router

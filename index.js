@@ -1,5 +1,4 @@
 const express = require("express")
-const auth = require("./routes/auth")
 const db = require("./database/db")
 
 const app = express()
@@ -8,7 +7,7 @@ const app = express()
 app.use(express.json())
 
 // ROUTE 
-app.use("/api/auth", auth)
+app.use("/api/auth", require("./routes/auth"))
 
 const PORT = process.env.PORT || 5000
 
