@@ -4,6 +4,7 @@ const db = require("../database/db");
 const bycrpt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const keys = require("../config/dev")
+const checkAuth = require("../middleware/checkAuth")
 
 // SIGN UP ROUTE 
 // PUBLIC
@@ -70,20 +71,71 @@ router.post("/signup", [
 
 // LOG IN ROUTE 
 // PUBLIC
-router.post("/login", [], (req, res) => {
+router.post("/login", [
+    check("email", "Provide a valid email")
+    .isEmail(),
+    check("password", "Password is required")
+    .not()
+    .isEmpty()
+], async (req, res) => {
     // VALID USER INPUT,
+    const errors = validationResult(req)
 
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const {email, password} = req.body
     // CHECK IF USER EXISTS 
+    let user = await db
+    .getDb()
+    .collection("users")
+    .findOne({email})
+
+    if(!user) return res.status(400).json({errors : [{msg: "Invalid Credentials"}]})
 
     // COMPARE PASSWORD IN THE DATABASE WITH PROVIDED PASSWORD
+    let results = await bycrpt.compare(password, user.password)
+
+    if(!results) return res.status(400).json({errors : [{msg: "Invalid Credentials"}]})
 
     // RETURN JSON WEB TOKEN
+     // RETURN BACK A JSON WEB TOKEN 
+     const token = jwt.sign({email}, keys.JWT_Secret)
+
+
+     // RETURN THE TOKEN AND SUCCESS MESSAGE
+     res.json({
+         token,
+         msg: "User logged in"
+     })
 })
 
 
 // GETS USER BY TOKEN
 // PRIVATE
+router.get("/", checkAuth, async (req, res) => {
 
+    // GET THE TOKEN FROM THE REQ   
+    const email = req.user;
+    
+    // FIND AND RETURN USER
+    try {
+        const user = await db
+        .getDb()
+        .collection("users")
+        .find({email})
+        .project({"password": 0, "_id": 0})
+        .toArray()
+        
+        res.json(user[0])
+    } catch (error) {
+        res.status(500).json({msg: "Server Error"})
+    }
+
+
+
+})
 
 
 
