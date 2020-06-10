@@ -1,0 +1,15 @@
+
+.LogInForm {
+    
+    &__form {
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+        margin: 15rem auto;
+    }
+
+    &__input {
+        padding: 0.5rem;
+        margin: 0.25rem
+    }
+}

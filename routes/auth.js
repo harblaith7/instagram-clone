@@ -62,8 +62,7 @@ router.post("/signup", [
 
     // RETURN THE TOKEN AND SUCCESS MESSAGE
     res.json({
-        token,
-        msg: "User created"
+        token
     })
 
 
