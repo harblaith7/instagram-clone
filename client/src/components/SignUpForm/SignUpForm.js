@@ -74,7 +74,7 @@ import {Redirect} from "react-router-dom"
                     <input type="text" className="SignUpForm__input" placeholder="Email" name="email" onChange={this.handleChange} value={this.state.userInput.email}/>
                     <input type="password" className="SignUpForm__input" placeholder="Password" name="password" onChange={this.handleChange} value={this.state.userInput.password}/>
                     <input type="password" className="SignUpForm__input" placeholder="Confirm Password" name="confirmPassword" onChange={this.handleChange} value={this.state.userInput.confirmPassword}/>
-                    <input type="submit" className="SignUpForm__input" value="Sign up"/>
+                    <input type="submit" className="SignUpForm__input SignUpForm__input--sbtBtn" value="Sign up"/>
                 </form>
             </div>
         )

@@ -56,13 +56,18 @@ export const register = ({firstName, lastName, email, password}) => async dispat
        dispatch(loadUser())
 
     } catch (err) {
-        const error = err.response.data.errors[0].msg;
+        
+        console.log(err)
+        if(err.response) {
+            const error = err.response.data.errors[0].msg;
+            dispatch(insertAlert(error))
+        }
 
         dispatch({
             type: REGISTER_FAIL,
         })
 
-        dispatch(insertAlert(error))
+       
     }
 
 } 
