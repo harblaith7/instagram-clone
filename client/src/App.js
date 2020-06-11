@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './App.scss';
-import {BrowserRouter, Route ,Switch} from "react-router-dom"
+import {BrowserRouter, Route , Switch} from "react-router-dom"
 import LandingPage from './pages/LandingPage/LandingPage';
 import LogInPage from "./pages/LogInPage/LogInPage"
 import SignUpPage from "./pages/SignUpPage/SignUpPage"

@@ -7,8 +7,8 @@ export default class Header extends Component {
         return (
             <div className="Header">
                 <div className="Header__container">
-                    <Link to="/login">Log in</Link>
-                    <Link to="/signup">Sign up</Link>
+                    <Link to="/login" className="Header__link Header__link--login">Log in</Link>
+                    <Link to="/signup" className="Header__link Header__link--signup">Sign up</Link>
                 </div>
             </div>
         )

@@ -4,7 +4,7 @@
   "description": "This is a image uploading application I've built to improve my node.js skills",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
