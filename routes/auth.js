@@ -117,6 +117,21 @@ router.get("/", checkAuth, async (req, res) => {
 
     // GET THE TOKEN FROM THE REQ   
     const email = req.user;
+
+    const redis = require("redis")
+    const redisUrl = "redis://127.0.0.1:6379";
+    const client = redis.createClient(redisUrl);
+    const util = require("util")
+    client.get = util.promisify(client.get)
+
+
+    const cachedUser = await client.get(email)
+
+    if(cachedUser){
+        return res.json({...JSON.parse(cachedUser)[0], fromCache: true})
+    }
+
+    
     
     // FIND AND RETURN USER
     try {
@@ -126,6 +141,8 @@ router.get("/", checkAuth, async (req, res) => {
         .find({email})
         .project({"password": 0, "_id": 0})
         .toArray()
+
+        client.set(email, JSON.stringify(user))
         
         res.json(user[0])
     } catch (error) {
