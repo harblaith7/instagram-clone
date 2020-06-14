@@ -11,16 +11,21 @@ router.post("/", checkAuth, [
     .isEmpty()
 ], async (req, res) => {
     // CHECKING IF TWEET IS EMPTY
+    console.log(req.body, "???")
     const errors = validationResult(req)
+    console.log(errors)
 
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
 
+    console.log("running")
+
     // SAVING TWEET TO DATABASE
     const {tweet} = req.body;
 
-    const userTweet = await db
+    try {
+        const userTweet = await db
         .getDb()
         .collection("tweets")
         .insertOne({
@@ -28,9 +33,13 @@ router.post("/", checkAuth, [
             user: req.user
         })
 
-    console.log(userTweet)
-    
-    res.json(userTweet)
+        console.log(userTweet, "sadasd")
+        
+        res.json(userTweet)
+    } catch (error) {
+        console.log(error)
+        res.json(error)
+    }
 
 })
 
