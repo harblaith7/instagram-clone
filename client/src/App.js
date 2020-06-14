@@ -4,7 +4,7 @@ import {BrowserRouter, Route , Switch} from "react-router-dom"
 import LandingPage from './pages/LandingPage/LandingPage';
 import LogInPage from "./pages/LogInPage/LogInPage"
 import SignUpPage from "./pages/SignUpPage/SignUpPage"
-import Test from "./components/Dashboard/Dashboard"
+import DashboardPage from "./pages/DashboardPage/DashboardPage"
 import {Provider, connect} from "react-redux"
 import store from "./redux/store"
 import setAuthToken from "./redux/utils/setAuthToken";
@@ -29,7 +29,7 @@ function App() {
           <Switch>
             <Route path="/login" exact strict component={LogInPage} />
             <Route path="/signup" exact strict component={SignUpPage}/>
-            <PrivateRoute path="/dashboard" exact strict component={Test} />
+            <PrivateRoute path="/dashboard" exact strict component={DashboardPage} />
             <Route path="/" strict exact component={LandingPage}/>
             
           </Switch>

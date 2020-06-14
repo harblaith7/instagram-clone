@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-export default class Dashboard extends Component {
+export default class Tweet extends Component {
     render() {
         return (
-            <div>
-                heelllo dashboard
+            <div className="Tweet">
+                
             </div>
         )
     }
