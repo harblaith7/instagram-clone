@@ -44,4 +44,23 @@ router.post("/", checkAuth, [
 })
 
 
+router.get("/", checkAuth, async (req, res) => {
+
+    try {
+        let tweets = await db
+        .getDb()
+        .collection("tweets")
+        .find({user: "jamesanderson@gmail.com"})
+
+        console.log(tweets)
+        res.send(tweets)
+    } catch (error) {
+        res.status(500).json({
+            msg: "Server Error"
+        })
+    }
+
+})
+
+
 module.exports = router

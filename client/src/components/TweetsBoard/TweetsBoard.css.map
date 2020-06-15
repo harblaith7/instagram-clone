@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,YAAY,CAAC;EACT,MAAM,EAAE,KAAK;EACb,KAAK,EAAE,GAAG;EACV,UAAU,EAAE,MAAM;CAErB",
+    "sources": [
+        "TweetsBoard.scss"
+    ],
+    "names": [],
+    "file": "TweetsBoard.css"
+}

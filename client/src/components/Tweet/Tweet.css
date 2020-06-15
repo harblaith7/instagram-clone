@@ -1,0 +1,9 @@
+.Tweet {
+  height: 2rem;
+  -webkit-box-shadow: 0.1rem 0.1rem 1rem rgba(0, 0, 0, 0.356);
+          box-shadow: 0.1rem 0.1rem 1rem rgba(0, 0, 0, 0.356);
+  width: 60%;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+/*# sourceMappingURL=Tweet.css.map */

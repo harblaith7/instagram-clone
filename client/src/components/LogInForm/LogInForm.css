@@ -1,0 +1,17 @@
+.LogInForm__form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 30%;
+  margin: 15rem auto;
+}
+
+.LogInForm__input {
+  padding: 0.5rem;
+  margin: 0.25rem;
+}
+/*# sourceMappingURL=LogInForm.css.map */

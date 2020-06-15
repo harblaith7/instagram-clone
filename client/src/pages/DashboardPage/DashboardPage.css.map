@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAKK,AAAD,yBAAY,CAAC;EACT,KAAK,EAAE,GAAG;EACV,MAAM,EAAE,MAAM;EACd,OAAO,EAAE,KAAK;EACd,OAAO,EAAE,IAAI;EACb,WAAW,EAAE,MAAM;EACnB,eAAe,EAAE,MAAM;EACvB,cAAc,EAAE,MAAM;CACzB",
+    "sources": [
+        "DashboardPage.scss"
+    ],
+    "names": [],
+    "file": "DashboardPage.css"
+}
